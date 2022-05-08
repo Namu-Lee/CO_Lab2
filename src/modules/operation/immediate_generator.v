@@ -1,6 +1,6 @@
 // imm_generator.v
 
-module imm_generator #(
+module immediate_generator #(
   parameter DATA_WIDTH = 32
 )(
   input [31:0] instruction,

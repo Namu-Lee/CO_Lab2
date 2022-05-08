@@ -13,7 +13,8 @@ reg[DATA_WIDTH-1:0] inst_memory[0:NUM_INSTS-1];
 initial $readmemb("data/inst.mem", inst_memory);
 
 always @(*) begin
-  instruction = inst_memory[address[7:2]];
+  if (address < 32'd256)
+  	instruction = inst_memory[address[7:2]];
 end
 
 endmodule

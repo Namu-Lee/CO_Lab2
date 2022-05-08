@@ -28,29 +28,54 @@ module exmem_reg #(
   input [DATA_WIDTH-1:0] ex_writedata,
   input [2:0] ex_funct3,
   input [4:0] ex_rd,
+  input flush,
   
   //////////////////////////////////////
   // Outputs
   //////////////////////////////////////
-  output [DATA_WIDTH-1:0] mem_pc_plus_4,
-  output [DATA_WIDTH-1:0] mem_pc_target,
-  output mem_taken,
+  output reg [DATA_WIDTH-1:0] mem_pc_plus_4,
+  output reg [DATA_WIDTH-1:0] mem_pc_target,
+  output reg mem_taken,
 
   // mem control
-  output mem_memread,
-  output mem_memwrite,
+  output reg mem_memread,
+  output reg mem_memwrite,
 
   // wb control
-  output [1:0] mem_jump,
-  output mem_memtoreg,
-  output mem_regwrite,
+  output reg [1:0] mem_jump,
+  output reg mem_memtoreg,
+  output reg mem_regwrite,
   
-  output [DATA_WIDTH-1:0] mem_alu_result,
-  output [DATA_WIDTH-1:0] mem_writedata,
-  output [2:0] mem_funct3,
-  output [4:0] mem_rd
+  output reg [DATA_WIDTH-1:0] mem_alu_result,
+  output reg [DATA_WIDTH-1:0] mem_writedata,
+  output reg [2:0] mem_funct3,
+  output reg [4:0] mem_rd
 );
 
 // TODO: Implement EX / MEM pipeline register module
+
+always @(posedge clk) begin
+  if(flush == 0) begin
+	mem_pc_plus_4 <= ex_pc_plus_4;
+	mem_pc_target <= ex_pc_target;
+	mem_taken <= ex_taken;
+	mem_memread <= ex_memread;
+	mem_memwrite <= ex_memwrite;
+	mem_jump <= ex_jump;
+	mem_memtoreg <= ex_memtoreg;
+	mem_regwrite <= ex_regwrite;
+	mem_alu_result <= ex_alu_result;
+	mem_writedata <= ex_writedata;
+	mem_funct3 <= ex_funct3;
+	mem_rd <= ex_rd;
+  end
+  else begin // flush operation: insert a NOP to MEM stage
+	mem_taken <= 0;
+	mem_memread <= 0;
+    mem_memwrite <= 0;
+	mem_memtoreg <= 0;
+    mem_regwrite <= 0;
+  end
+end
 
 endmodule

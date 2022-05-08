@@ -5,9 +5,9 @@
 // Note that there exist 10 R-type instructions in RV32I:
 // add, sub, xor, or, and, sll, srl, sra, slt, sltu
 
-`include "defines.v"
+`include "src/modules/utils/defines.v"
 
-module ALU 
+module alu 
 #(parameter DATA_WIDTH = 32)(
   input [DATA_WIDTH-1:0] in_a, 
   input [DATA_WIDTH-1:0] in_b,
@@ -53,7 +53,7 @@ always @(*) begin
 	`OP_SLTU: check = (in_a < in_b) ? 1:0;
 	`OP_BGEU: check = (in_a >= in_b) ? 1:0;
 	// TODO END
-	default:  check = 1'b0;
+	default:  check = 1'b1;
   endcase
 end
 endmodule

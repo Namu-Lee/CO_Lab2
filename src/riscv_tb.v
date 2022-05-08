@@ -12,7 +12,7 @@ initial begin
   rstn = 1'b0;
   $display($time, " ** Start Simulation **");
   $display($time, " Instruction Memory ");
-  $monitor($time, " [PC] pc : %d", my_cpu.PC);
+  $monitor($time, " [PC] pc : %d, flush: %d, stall: %d, MEM_taken: %d, x1:%d, x2:%d, x8:%d, x9:%d, 10: %d, x14:%d, x15:%d", my_cpu.PC, my_cpu.flush, my_cpu.stall, my_cpu.MEM_taken, my_cpu.m_register_file.reg_array[1], my_cpu.m_register_file.reg_array[2], my_cpu.m_register_file.reg_array[8], my_cpu.m_register_file.reg_array[9], my_cpu.m_register_file.reg_array[10], my_cpu.m_register_file.reg_array[14],  my_cpu.m_register_file.reg_array[15]);
   #60 rstn = 1'b1;
   #4000; 
   rstn = 1'b0;
